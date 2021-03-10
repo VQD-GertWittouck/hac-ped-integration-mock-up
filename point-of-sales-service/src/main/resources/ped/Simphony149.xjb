@@ -1,0 +1,16 @@
+<jaxb:bindings 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    jaxb:extensionBindingPrefixes="xjc"
+    version="2.1">
+    <jaxb:globalBindings generateIsSetMethod="true" fixedAttributeAsConstantProperty="true">
+        <xjc:serializable uid="1" />
+    </jaxb:globalBindings>
+   <jaxb:bindings schemaLocation="Simphony149.xsd" node="/xs:schema">
+    <jaxb:schemaBindings>
+        <jaxb:package name="com.fisglobal.transaxpay.microssymphony149.namespace"/>
+    </jaxb:schemaBindings>
+</jaxb:bindings>
+</jaxb:bindings>
+

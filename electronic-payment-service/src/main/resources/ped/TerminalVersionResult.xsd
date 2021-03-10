@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  $Revision: 1.3 $
+  $Author: Dave Milne (Contractor) (lc22028) $
+  $Date: 2012/05/15 10:43:11BST $
+
+-->
+<schema targetNamespace="http://eps.fnfis.com/TerminalVersionResult"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tms="http://eps.fnfis.com/TerminalVersionResult">
+
+	<simpleType name="SuccessOrFailure">
+		<annotation>
+			<documentation>Enumeration to define when the updates should be processed.
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="Success">
+				<annotation>
+					<documentation>It worked
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="Failure">
+				<annotation>
+					<documentation>It didnt work
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="Ignored">
+				<annotation>
+					<documentation>It didnt work
+					</documentation>
+				</annotation>
+			</enumeration>	
+			<enumeration value="NotProcessed">
+				<annotation>
+					<documentation>It didnt work
+					</documentation>
+				</annotation>
+			</enumeration>						
+		</restriction>
+	</simpleType>
+	
+	<complexType name="InstallationResult">
+		<annotation>
+			<documentation>A command to write a file to the PED file system.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="Result" type="tms:SuccessOrFailure" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>the result</documentation>
+				</annotation>
+			</element>
+			<element name="Text" type="string" maxOccurs="1"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						Error Text
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+		</complexType>			
+
+	<complexType name="InstallPedFileCommandResult">
+		<annotation>
+			<documentation>A command to write a file to the PED file system.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="SourceFile" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The source file name in the TMS file system. Can be absolute relative to the jailed SFTP root or relative to the loaction of the TerminalVersion file</documentation>
+				</annotation>
+			</element>
+			<element name="InstalledAlready" type="boolean" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>Is the file installed already</documentation>
+				</annotation>
+			</element>			
+			<element name="Result" type="tms:InstallationResult" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The source file name in the TMS file system. Can be absolute relative to the jailed SFTP root or relative to the loaction of the TerminalVersion file</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SysInfo">
+		<annotation>
+			<documentation>System Information
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="Model" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>e.g. Manufacturer VERIFONE Model VX820</documentation>
+				</annotation>
+			</element>
+			<element name="Serial" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>e.g. Manufacturer VERIFONE Model VX820</documentation>
+				</annotation>
+			</element>			
+			<element name="ProgramVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>e.g. kernel,5.0.6;efttrans,1.0.3;dmgr,1.0.3;</documentation>
+				</annotation>
+			</element>	
+			<element name="OSVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>e.g. QT820104</documentation>
+				</annotation>
+			</element>		
+			<element name="ConfigVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>
+			<element name="ContactlessClientVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>	
+			<element name="ContactlessFirmwareVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>	
+			<element name="EOSVersion" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>
+			<element name="WifiFirmwareVersion" type="string" maxOccurs="1" minOccurs="0">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>
+			<element name="SRED" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>config</documentation>
+				</annotation>
+			</element>										
+		</sequence>
+	</complexType>
+
+	<complexType name="RemovePedFileCommandResult">
+		<annotation>
+			<documentation>A command to remove a file from the PED file system.
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="Filename" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The filename to remove on the PED, including any drive letter.</documentation>
+				</annotation>
+			</element>
+			<element name="Result" type="tms:InstallationResult" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The source file name in the TMS file system. Can be absolute relative to the jailed SFTP root or relative to the loaction of the TerminalVersion file</documentation>
+				</annotation>
+			</element>				
+		</sequence>
+	</complexType>
+
+
+	<complexType name="ReadPedFileCommandResult">
+		<annotation>
+			<documentation>A command to read a file from the PED file system and copy it back to the TMS.</documentation>
+		</annotation>
+		<sequence>
+			<element name="SourceFile" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The full source path on the ped file system including any drive specification if it has a multi rooted file system.</documentation>
+				</annotation>
+			</element>
+			<element name="Result" type="tms:InstallationResult" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The source file name in the TMS file system. Can be absolute relative to the jailed SFTP root or relative to the loaction of the TerminalVersion file</documentation>
+				</annotation>
+			</element>	
+		</sequence>
+	</complexType>
+
+
+	<complexType name="ManifestCommandResult">
+		<annotation>
+			<documentation>A single command of the one of the supported types.
+			</documentation>
+		</annotation>
+		<choice>
+			<element name="InstallPedFile" type="tms:InstallPedFileCommandResult">
+                <annotation>
+                	<documentation>An install command</documentation>
+                </annotation>
+			</element>
+			<element name="ReadPedFile" type="tms:ReadPedFileCommandResult">
+                <annotation>
+                	<documentation>A read file command.</documentation>
+                </annotation>
+			</element>
+			<element name="RemovePedFile" type="tms:RemovePedFileCommandResult">
+                <annotation>
+                	<documentation>A remove file command.</documentation>
+                </annotation>
+			</element>
+		</choice>
+	</complexType>
+
+	<complexType name="ManifestCommandResultList">
+		<annotation>
+			<documentation>A list of commands to install the update on the PED.
+			</documentation>
+		</annotation>
+		<sequence minOccurs="1">
+			<element name="Command" type="tms:ManifestCommandResult"
+				maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="SoftwareVersion">
+        <annotation>
+        	<documentation>Version of software</documentation>
+        </annotation>
+        <sequence>
+			<element name="MajorVersion" type="int" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>An integer describing the major version number of this manifest.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="MinorVersion" type="int" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>An integer describing the minor version number of this manifest.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="BuildNumber" type="int" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The number of times the TerminalVersion has been built for this PED. It always increases on every build and never resets.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="PropertiesType">
+		<annotation>
+			<documentation>Properties about this update file.</documentation>
+		</annotation>
+		<sequence>
+			<element name="CreatedDate" type="dateTime" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>
+						The date the file was created.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="CreatedBy" type="string" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>
+						Name of the author or program that created this
+						manifest file.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="SoftwareVersion" type="tms:SoftwareVersion" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>The version of the software that this file relates to
+					</documentation>
+				</annotation>
+			</element>
+			<element name="PriorSoftwareVersion" type="tms:SoftwareVersion" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>The last version of the software
+					</documentation>
+				</annotation>
+			</element>
+			<element name="MajorUpgrade" type="boolean" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>Is this a major upgrade ?
+					</documentation>
+				</annotation>
+			</element>									
+		</sequence>
+	</complexType>
+
+
+	<complexType name="PedType">
+        <annotation>
+        	<documentation>The PED description.</documentation>
+        </annotation>
+        <sequence>
+			<element name="PhysicalID" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The ptid of the PED which is an immuatable value installed by the manufacturer. This differs from the tid which can be changed in configuration.</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="InstallationType">
+		<sequence>
+			<element name="ProcessedDate" type="dateTime" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>
+						The date the file was processed.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Result" type="tms:InstallationResult" maxOccurs="1"
+				minOccurs="1">
+				<annotation>
+					<documentation>
+					The result
+					</documentation>
+				</annotation>
+			</element>						
+		</sequence>
+	</complexType>
+	
+	<element name="TerminalVersionResult">
+        <annotation>
+        	<documentation>Root anonymous complex element defining the overall structure of the TerminalVersion file.</documentation>
+        </annotation>
+        <complexType>
+		<sequence>
+			<element name="Properties" type="tms:PropertiesType"
+				maxOccurs="1" minOccurs="1">
+			</element>
+			<element name="Ped" type="tms:PedType" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="Installation" type="tms:InstallationType" maxOccurs="1"
+				minOccurs="1">
+			</element>
+			<element name="SysInfo" type="tms:SysInfo" maxOccurs="1"
+				minOccurs="0">
+			</element>			
+			<element name="Manifest" type="tms:ManifestCommandResultList"
+				maxOccurs="1" minOccurs="1">
+			</element>
+		</sequence>
+		</complexType>
+	</element>
+</schema> 

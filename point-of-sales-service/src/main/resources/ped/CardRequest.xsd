@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CardRequest.xsd -->
+<!-- Based on Wincor Nixdorf O.P.I. Interface Specification V1.3 and Wincor 
+	Nixdorf O.P.I. Implementation Guidelines V1.1 -->
+<!-- Version: 1.1.0 -->
+<!-- Date: 30.09.2008 -->
+<!-- Author: Joachim Seefeldt (Wincor Nixdorf International GmbH) -->
+<xs:schema xmlns="http://www.nrf-arts.org/IXRetail/namespace"
+	xmlns:IFSF="http://www.ifsf.org/" attributeFormDefault="unqualified"
+	elementFormDefault="qualified" targetNamespace="http://www.nrf-arts.org/IXRetail/namespace"
+	version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="DR_BasicTypes.xsd" />
+	<xs:include schemaLocation="DR_CountryCode_Full.xsd" />
+	<xs:include schemaLocation="IFSF_DR_UnitOfMeasureCode.xsd" />
+	<xs:include schemaLocation="DR_CurrencyCode_Full.xsd" />
+	<xs:include schemaLocation="IFSF_BasicTypesCards.xsd" />
+	<xs:include schemaLocation="IFSF_LanguageCode_Full.xsd" />
+	
+	<xs:element name="CardServiceRequest">
+		<xs:annotation>
+			<xs:documentation>IFSF POS Sell to EPS interface</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="POSdata">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" name="TillNumber">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="9" />
+										<xs:minInclusive value="0" />
+										<xs:maxInclusive value="99999" />
+										<xs:fractionDigits value="0" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!--  Dave Milne FIS Extension -->
+							<xs:element minOccurs="0" maxOccurs="1" name="StoreID">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1" name="Region">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" maxOccurs="1" name="Profile">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="ReceiptNumber">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="9" />
+										<xs:minInclusive value="0" />
+										<xs:maxInclusive value="99999" />
+										<xs:fractionDigits value="0" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!--  Dave Milne FIS end Extension -->
+							<xs:element minOccurs="0" name="CheckSum">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="9" />
+										<xs:minInclusive value="0" />
+										<xs:maxInclusive value="99999" />
+										<xs:fractionDigits value="0" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="POSTimeStamp" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="ServiceLevel">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="1" />
+										<xs:enumeration value="S" />
+										<xs:enumeration value="F" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="ShiftNumber">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="3" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="ClerkID">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="9" />
+										<xs:minInclusive value="0" />
+										<xs:maxInclusive value="999999999" />
+										<xs:fractionDigits value="0" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="OutdoorPosition">
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:totalDigits value="2" />
+										<xs:fractionDigits value="0" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="ManualPAN" type="xs:boolean" />
+
+							<!--  FIS Extension in EPS 2.5 dave.milne@fisglobal.com -->
+					  		<!--  Bugzilla id=4565 Advice changes -->
+							<xs:element name="AdviceApprovalCode" type="AuthorisationCodeType" minOccurs="0" maxOccurs="1" />
+							
+							<!-- FIS Extension in EPS 2.0.32. dave.milne@fisglobal.com -->
+							<xs:element minOccurs="0" maxOccurs="1" name="PromptGratuity" type="xs:boolean" />
+							<!-- end FIS Extension -->
+							
+							<!-- David Milne 5398 - RS18765 Trurating  -->
+							
+							<xs:element name="RatingParameters" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" name="Url" type="xs:string" />
+										<xs:element minOccurs="0" name="Rate" type="xs:boolean" />
+										<xs:element minOccurs="0" name="SessionId" type="xs:string" />
+										<xs:element minOccurs="0" name="RatingId" type="xs:string" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+								<!--  nd 5398 - RS18765 Trurating  -->
+								
+							<!-- Start | RS19189 - Decline Override (Farmfoods) -->
+							
+							<xs:element name="DeclineOverride" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:attribute name="Enabled" type="xs:boolean" use='optional' />
+								</xs:complexType>
+							</xs:element>
+							
+							<!-- End | RS19189 - Decline Override (Farmfoods) -->
+							
+							<!--  Dave Milne RS -->
+						
+							<xs:element name="Charity" minOccurs="0" maxOccurs="1">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element minOccurs="0" name="Enabled" maxOccurs="1" type="xs:boolean" />
+								</xs:sequence>
+							</xs:complexType>
+							</xs:element>
+							
+							<xs:element minOccurs="0" name="ClerkPermission">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="Low" />
+										<xs:enumeration value="Medium" />
+										<xs:enumeration value="High" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="TightControl" type="xs:boolean" />
+							<xs:element minOccurs="0" name="SplitPayment" type="xs:boolean" />
+							<xs:element minOccurs="0" name="VoiceReferral" type="xs:boolean" />
+							<xs:element minOccurs="0" name="TransactionNumber" 
+								type="xs:string" />
+							<xs:element minOccurs="0" name="DeviceProxy" type="DeviceProxy" />	<!-- MARBRI Added for Ladbrokes/Aurum -->
+						</xs:sequence>
+						<xs:attribute name="LanguageCode" type="LanguageCodeType"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+				
+				<!--  FIS Extension in EPS 2.5 dave.milne@fisglobal.com -->
+				<!--  Bugzilla id=4566 Method of Payment changes -->
+				<xs:element name="CardMOP" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" name="RegexRestrict" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" name="Loyalty">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" name="LoyaltyCard">
+								<xs:complexType>
+									<xs:complexContent mixed="false">
+										<xs:extension base="CardTrack">
+											<xs:attribute name="LoyaltyPAN" type="CardPANType"
+												use="optional" />
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element minOccurs="0" name="MOPrule">
+								<xs:complexType>
+									<xs:attribute name="CardPAN" type="CardPANType"
+										use="required" />
+									<xs:attribute name="CardCircuit" type="CardCircuitType"
+										use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element minOccurs="0" name="LoyaltyAmount" type="xs:float" />
+						</xs:sequence>
+						<xs:attribute name="LoyaltyFlag" type="xs:boolean"
+							use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" name="CardCircuitCollection">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" name="CardCircuit">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="CardCircuitType">
+											<xs:attribute name="CardCircuitState" type="CardCircuitStateType"
+												use="optional" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<!--  FIS Extension in EPS 2.5 dave.milne@fisglobal.com -->
+				<!--  Bugzilla id=4564 Tokenisation changes -->
+				<xs:element minOccurs="0" name="CardTokenValue">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" name="CardPAN" type="CardTokenType" />
+							 <xs:element name="StartDate" type="CardDate" minOccurs="0"/>
+							  <xs:element name="ExpiryDate" type="CardDate" minOccurs="0"/>
+							  <xs:element name="IssueNumber" type="CardIssueType" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				
+				<xs:element minOccurs="0" name="OriginalTransaction">
+					<xs:complexType>
+						<xs:attribute name="TerminalID" type="TerminalIDType"
+							use="required" />
+						<xs:attribute name="TerminalBatch" type="BatchCodeType"
+							use="required" />
+						<xs:attribute name="STAN" type="STANtype" use="required" />
+						<xs:attribute name="TimeStamp" type="xs:dateTime"
+							use="required" />
+						<xs:attribute name="ApplicationID" type="xs:integer"
+							use="optional" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" name="TotalAmount">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="MonetaryAmount">
+								<xs:attribute name="PaymentAmount" type="MonetaryAmount"
+									use="optional">
+									<xs:annotation>
+										<xs:documentation>
+											Added dave.milne@fisglobal.com. The amount of the goods or
+											services being sold (i.e. excluses cashback).
+											Required for situations when cashback is requested by the till
+											operator from the customer as happens in the UK
+											(as opposed to the US model where the PED prompts the customer
+											for cashback)
+										</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="CashBackAmount" type="MonetaryAmount"
+									use="optional">
+									<xs:annotation>
+										<xs:documentation>Added dave.milne@fisglobal.com. The amount
+											of cashback</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="Currency" type="CurrencyCode"
+									use="optional">
+									<xs:annotation>
+										<xs:documentation>Conditional. Mandatory in case of
+											multi-currency environment.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="SaleItem">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ProductCode" type="ProductGroupType" />
+							<xs:element name="Amount" type="MonetaryAmount" />
+							<xs:element minOccurs="0" name="UnitMeasure" type="UnitOfMeasureCode" />
+							<xs:element minOccurs="0" name="UnitPrice" type="MonetaryAmount" />
+							<xs:element minOccurs="0" name="Quantity" type="xs:decimal" />
+							<xs:element minOccurs="0" name="TaxCode">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="1" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="AdditionalProductCode"
+								type="GTIN" />
+							<xs:element minOccurs="0" name="AdditionalProductInfo">
+								<xs:simpleType>
+									<xs:restriction base="xs:string" />
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="TypeMovement">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="1" />
+										<xs:enumeration value="0" />
+										<xs:enumeration value="1" />
+										<xs:enumeration value="2" />
+										<xs:enumeration value="3" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element minOccurs="0" name="SaleChannel">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="CompanyOwned" />
+										<xs:enumeration value="DealerOwned" />
+										<xs:enumeration value="ThirdPartyOwned" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="ItemID" type="xs:ID" use="required" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element minOccurs="0" name="CardValue" type="CardValueType" />
+				<!-- altered DCM to be in accordance with OPI Spec 1.3 (which has private 
+					data as xs:string <xs:element minOccurs="0" maxOccurs="unbounded" name="PrivateData"> 
+					<xs:complexType mixed="true"> <xs:sequence> <xs:element maxOccurs="1" name="AdditionalHostData" 
+					type="xs:hexBinary" /> </xs:sequence> </xs:complexType> </xs:element> -->
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="PrivateData">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="256"></xs:maxLength>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<!-- FIS extension Prompt -->
+				<xs:element minOccurs="0" name="Prompt" type="Prompt" />
+				
+				<!-- Micros extension, added DC Milne on advice from Gavin Pryde -->
+				<xs:element minOccurs="0" maxOccurs="1" name="MiscellaneousData" type="xs:string" />
+
+			</xs:sequence>
+			<xs:attribute name="RequestType" type="CardRequestType"
+				use="required" />
+			<xs:attribute name="ApplicationSender" type="ApplicationType"
+				use="optional" />
+			<xs:attribute name="WorkstationID" type="WorkstationIDType"
+				use="required" />
+			<xs:attribute name="POPID" type="POPIDType" use="optional" />
+			<xs:attribute name="RequestID" type="RequestIDType" use="required" />
+			<xs:attribute name="ReferenceNumber" type="RequestIDType"
+				use="optional" />
+			<xs:attribute name="ConfirmWhitelist" type="xs:boolean"
+				use="optional" />  <!-- MARBRI - Added for Ladbrokes/Aurum -->
+			<xs:attribute name="CustomerNotPresent" type="xs:boolean"
+				use="optional" />  <!-- patcam - Added for Aurum RCR006 -->
+
+			<!-- ADVICE - DCM made FIS extension advice for financial advice transactions. 
+				This is where the transaction has already taken place by other means -->
+			<xs:attribute name="Advice" type="xs:boolean" use="optional" />
+			<!-- end ADvICE -->
+
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

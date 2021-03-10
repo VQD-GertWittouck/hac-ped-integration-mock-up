@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.0 U (http://www.xmlspy.com) by Joachim Seefeldt (Wincor Nixdorf GmbH & Co. KG) -->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:include schemaLocation="IFSF_BasicTypesCards.xsd"/>
+	<xs:include schemaLocation="DR_CurrencyCode_Full.xsd"/>
+	<xs:element name="DeviceResponse">
+		<xs:annotation>
+			<xs:documentation>IFSF simple device Input Output response</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Output" minOccurs="0" maxOccurs="2">
+					<xs:complexType>
+						<xs:attribute name="OutDeviceTarget" type="DeviceType" use="required"/>
+						<xs:attribute name="OutResult" type="RequestResultType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Input" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SecureData" type="SecureDataFlow" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="InputValue" type="InputValueType" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="InDeviceTarget" type="DeviceType" use="required"/>
+						<xs:attribute name="InResult" type="RequestResultType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EventResult" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Dispenser" type="xs:unsignedByte" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="ProductCode" type="ProductGroupType" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="ModifiedRequest" type="CardRequestType" minOccurs="0"/>
+							<!-- EPS 1.5.0 Added in ability to change the amount. Dave Milne dave.milne@fisglobal.com -->
+								 <xs:element minOccurs="0" name="ModifiedTotalAmount">
+									<xs:complexType>
+                  						<xs:simpleContent>
+                    						<xs:extension base="MonetaryAmount">
+												<xs:attribute name="PaymentAmount" type="MonetaryAmount" use="optional">
+													<xs:annotation>
+														<xs:documentation>
+															Added dave.milne@fisglobal.com. The amount of the goods or services being sold (i.e. excluses cashback). 
+															Required for situations when cashback is requested by the till operator from the customer as happens in the UK
+															(as opposed to the US model where the PED prompts the customer for cashback)
+														</xs:documentation>
+                									</xs:annotation>
+												</xs:attribute>				    
+												<xs:attribute name="CashBackAmount" type="MonetaryAmount" use="optional">
+													<xs:annotation>
+		                								<xs:documentation>Added dave.milne@fisglobal.com. The amount of cashback</xs:documentation>
+                									</xs:annotation>				
+												</xs:attribute>				    
+	                							<xs:attribute name="Currency" type="CurrencyCode" use="optional">
+        	        								<xs:annotation>
+	                	    							<xs:documentation>Not supported currently</xs:documentation>
+													</xs:annotation>
+        										</xs:attribute>
+                    						</xs:extension>
+                  						</xs:simpleContent>	
+          							</xs:complexType>
+        					</xs:element>
+        <!--  End Adding in ability to change the amount -->
+							<xs:element name="SaleItem" type="SaleItemType" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="RequestType" type="DeviceRequestType" use="required"/>
+			<xs:attribute name="ApplicationSender" type="ApplicationType" use="required"/>
+			<xs:attribute name="WorkstationID" type="WorkstationIDType" use="optional"/>
+			<xs:attribute name="TerminalID" type="TerminalIDType" use="optional"/>
+			<xs:attribute name="POPID" type="POPIDType" use="optional"/>
+			<xs:attribute name="RequestID" type="RequestIDType" use="required"/>
+			<xs:attribute name="SequenceID" type="SequenceIDType" use="optional"/>
+			<xs:attribute name="ReferenceRequestID" type="RequestIDType" use="optional"/>
+			<xs:attribute name="OverallResult" type="RequestResultType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

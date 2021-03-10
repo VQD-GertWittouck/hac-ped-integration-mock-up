@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001, ARTS-IXRetail, DRA (NCR, et al) -->
+<!-- edited by Jim Galloway (NCR) -->
+<!-- IFSF integration of the original document, to include M, CM, L, CL -->
+<!-- Further integration might be required according to the unit of measures used for selling goods in different Countries -->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="UnitOfMeasureCode">
+		<xs:annotation>
+			<xs:documentation>enum codes excerpted from UN/ECE REC 20</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EA">
+				<xs:annotation>
+					<xs:documentation>each</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FOT">
+				<xs:annotation>
+					<xs:documentation>foot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GLI">
+				<xs:annotation>
+					<xs:documentation>gallon (UK)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GLL">
+				<xs:annotation>
+					<xs:documentation>gallon (US)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GRM">
+				<xs:annotation>
+					<xs:documentation>gram</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INH">
+				<xs:annotation>
+					<xs:documentation>inch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KGM">
+				<xs:annotation>
+					<xs:documentation>kilogram</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBR">
+				<xs:annotation>
+					<xs:documentation>pound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MTR">
+				<xs:annotation>
+					<xs:documentation>Meter linear</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CM">
+				<xs:annotation>
+					<xs:documentation>Centimetre</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LTR">
+				<xs:annotation>
+					<xs:documentation>Litre</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CL">
+				<xs:annotation>
+					<xs:documentation>Centilitre</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

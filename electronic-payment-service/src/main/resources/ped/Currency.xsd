@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://eps.fnfis.com/currencies"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:cur="http://eps.fnfis.com/currencies">
+
+	<complexType name="currency">
+        <annotation>
+        	<documentation>A Currency</documentation>
+        </annotation>
+        <sequence>
+			<element name="currency_alpha_code" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The ISO code for a currency (e.g. GBP or USD)</documentation>
+				</annotation>
+			</element>
+			<element name="currency_code" type="integer" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The code for a currency (e.g. GBP is 826)</documentation>
+				</annotation>
+			</element>
+			<element name="prefix_symbol" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The currency symbol that comes before the currency</documentation>
+				</annotation>
+			</element>
+			<element name="suffix_symbol" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The currency symbol that comes after the currency</documentation>
+				</annotation>
+			</element>
+			<element name="minor_digits" type="integer" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>number of digits the currency has after the dot.e.g. 1234 with minor_digits  2 => 12.34</documentation>
+				</annotation>
+			</element>
+			<element name="seperator_char" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The sepArator character. I can spell. The person who designed the xml file can't.</documentation>
+				</annotation>
+			</element>
+			<element name="grouping_char" type="string" maxOccurs="1" minOccurs="1">
+				<annotation>
+					<documentation>The grouping_char character. e.g. 1,234</documentation>
+				</annotation>
+			</element>																		
+		</sequence>
+	</complexType>
+	
+	<element name="currencies">
+        <annotation>
+        	<documentation>Collection of currency information</documentation>
+        </annotation>
+        <complexType>
+		<sequence>
+			<element name="currency" type="cur:currency"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+		</complexType>
+	</element>
+</schema>
