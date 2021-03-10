@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema  
+	targetNamespace="http://eps.fnfis.com/Receipts"
+	elementFormDefault="qualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rcd="http://eps.fnfis.com/Receipts">
+
+	<xs:complexType name="LineElementCollection">
+			<xs:sequence>
+			<xs:element name="LineElement" type="rcd:LineElement" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="LineElement">
+			<xs:sequence>
+			<xs:element name="dependency" type="rcd:Depends" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			</xs:sequence>	
+	</xs:complexType>
+
+     <xs:complexType name="PaperCut">
+		<xs:annotation>
+        	<xs:documentation>An instruction to cut the paper after this point</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:LineElement">  
+        	</xs:extension>
+       	</xs:complexContent>
+	 </xs:complexType>
+	 
+     <xs:simpleType name="Alignment">
+        <xs:annotation>
+        	<xs:documentation>An xs:enumeration to define alignment</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:enumeration value="LEFT"></xs:enumeration>
+			<xs:enumeration value="RIGHT"></xs:enumeration>
+			<xs:enumeration value="CENTER"></xs:enumeration>
+			<xs:enumeration value="JUSTIFIED"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>	 
+	 
+     <xs:complexType name="LineFeed">
+        <xs:annotation>
+        	<xs:documentation>An instruction to display a blank line</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:LineElement">  
+        	</xs:extension>
+       	</xs:complexContent>        
+	 </xs:complexType>
+	 
+     <xs:complexType name="Line">
+        <xs:annotation>
+        	<xs:documentation>An instruction to display a line</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:LineElement">  
+       			<xs:attribute name="lineChar" type="xs:string" use="optional" />
+        	</xs:extension>
+       	</xs:complexContent>
+	 </xs:complexType>	 
+	 
+	<xs:complexType name="TextOperation">
+	        <xs:attribute name="attribute" type="xs:string" use="optional" />
+	</xs:complexType>	 
+	 
+     <xs:simpleType name="CaseConstant">
+        <xs:annotation>
+        	<xs:documentation>An xs:enumeration to define alignment</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:enumeration value="UPPER"></xs:enumeration>
+			<xs:enumeration value="LOWER"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>	
+	
+     <xs:simpleType name="BaseType">
+        <xs:annotation>
+        	<xs:documentation>An xs:enumeration to define alignment</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:enumeration value="INTEGER"></xs:enumeration>
+			<xs:enumeration value="DATE"></xs:enumeration>
+			<xs:enumeration value="STRING"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>		
+	 
+     <xs:simpleType name="DependencyOperator">
+        <xs:annotation>
+        	<xs:documentation>An xs:enumeration to define a match</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:enumeration value="="></xs:enumeration>
+			<xs:enumeration value="&gt;"></xs:enumeration>
+			<xs:enumeration value="=="></xs:enumeration>
+			<xs:enumeration value="!="></xs:enumeration>
+			<xs:enumeration value="ISNULL"></xs:enumeration>
+			<xs:enumeration value="NOTNULL"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>	
+	 
+     <xs:complexType name="Depends">
+        <xs:annotation>
+        	<xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="attribute" type="xs:string" use="required" />
+        <xs:attribute name="value" type="xs:string" />
+  		<xs:attribute name="operator" type="rcd:DependencyOperator" />
+	 </xs:complexType>
+	 
+     <xs:complexType name="Reformatter">
+        <xs:annotation>
+        	<xs:documentation></xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:TextOperation">            
+        	<xs:attribute name="formatString" type="xs:string" use="required" />
+			<xs:attribute name="parseString" type="xs:string" use="required" />        
+        	<xs:attribute name="baseType" type="rcd:BaseType" use="required" />
+		</xs:extension> 
+		</xs:complexContent>       	
+	 </xs:complexType>	 
+	 
+     <xs:complexType name="SearchReplace">
+        <xs:annotation>
+        	<xs:documentation></xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:TextOperation">        
+        		<xs:attribute name="regex" type="xs:string" use="required" />
+        		<xs:attribute name="replace" type="xs:string" />
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>	 
+	 
+	  <xs:complexType name="Mask">
+        <xs:annotation>
+        	<xs:documentation>Masks, keeping first preserveStart and last preserveEnd, unless invert is true in which case it masks 0 to preserveStart and preserveEnd to end</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:TextOperation">        
+        		<xs:attribute name="preserveStart" type="xs:int" use="required" />
+        		<xs:attribute name="preserveEnd" type="xs:int" use="required" />
+				<xs:attribute name="maskChar" type="xs:string" use="required" />
+				<xs:attribute name="invert" type="xs:boolean" use="required" />
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>	 
+	 
+	 <xs:complexType name="Pad">
+        <xs:annotation>
+        	<xs:documentation></xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:TextOperation">        
+        		<xs:attribute name="length" type="xs:int" use="required" />
+				<xs:attribute name="mode" type="rcd:Alignment" use="required" />
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>	 
+	 
+     <xs:complexType name="CaseChange">
+        <xs:annotation>
+        	<xs:documentation></xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:TextOperation">        
+        		<xs:attribute name="newCase" type="rcd:CaseConstant" use="required" />
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>	 	 
+
+     <xs:complexType name="TextString">
+        <xs:annotation>
+        	<xs:documentation>Some text to display</xs:documentation>
+        </xs:annotation>
+ 			<xs:sequence>
+			<xs:element name="dependency" type="rcd:Depends" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element> 			
+			<xs:element name="textOperation" type="rcd:TextOperation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence> 
+			<xs:attribute name="text" type="xs:string" use="required" />
+			<xs:attribute name="align" type="rcd:Alignment" use="optional"/>
+	 </xs:complexType>	 
+	 
+     <xs:complexType name="TextLine">
+        <xs:annotation>
+        	<xs:documentation>Some text to display</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:LineElement">  
+ 			<xs:sequence>
+				<xs:element name="text" type="rcd:TextString" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation></xs:documentation>
+					</xs:annotation>
+				</xs:element>			
+			</xs:sequence>
+			 <xs:attribute name="align" type="rcd:Alignment" />
+			</xs:extension>
+       	</xs:complexContent>		 
+	 </xs:complexType>	 	 
+
+	<xs:complexType name="BooleanDependencyOperator">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="dependency" type="rcd:Depends" minOccurs="1" maxOccurs="unbounded">
+			</xs:element>
+			<xs:choice minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="If" type="rcd:If"/>
+			<xs:element name="Or" type="rcd:Or"/>
+			<xs:element name="Not" type="rcd:Not"/>
+			</xs:choice>
+		</xs:sequence>	
+	</xs:complexType>
+
+     <xs:complexType name="Or">
+        <xs:annotation>
+        	<xs:documentation>Or</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:BooleanDependencyOperator">        
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>
+	 
+	 <xs:complexType name="If">
+        <xs:annotation>
+        	<xs:documentation>If condition</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:BooleanDependencyOperator">        
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType>
+	 
+	 <xs:complexType name="Not">
+        <xs:annotation>
+        	<xs:documentation>If condition</xs:documentation>
+        </xs:annotation>
+     	<xs:complexContent>
+     		<xs:extension base="rcd:BooleanDependencyOperator">        
+			</xs:extension>
+       	</xs:complexContent>	        
+	 </xs:complexType> 
+
+ 	<xs:complexType name="ConditionAction">
+ 		<xs:sequence>
+        <xs:annotation>
+        	<xs:documentation>A block that is executed after evaluating if a condition returns true or false</xs:documentation>
+        </xs:annotation>
+        <xs:element name="If" type="rcd:Condition" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="LineElement" type="rcd:LineElement" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+	 </xs:complexType>
+
+	<xs:complexType name="Condition">
+			<xs:sequence>
+			<xs:element name="dependency" type="rcd:Depends" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="If" type="rcd:If" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Then" type="rcd:ConditionAction" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Else" type="rcd:ConditionAction" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>	
+	</xs:complexType>
+
+	
+	<xs:element name="ReceiptFormat">
+        <xs:annotation>
+        	<xs:documentation>Root anonymous complex xs:element defining the overall structure of the TerminalVersion file.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+	     	<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="If" type="rcd:Condition" />
+				<xs:element name="LineElement" type="rcd:LineElement" />
+			</xs:choice>
+			<xs:attribute name="height" type="xs:int" />
+			<xs:attribute name="width" type="xs:int" />			
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+
+ 

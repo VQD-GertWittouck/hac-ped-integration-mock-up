@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Paolo Magnoni -->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:include schemaLocation="IFSF_BasicTypesCards.xsd"/>
+	<xs:element name="DeviceRequest">
+		<xs:annotation>
+			<xs:documentation>IFSF Simple Device IO request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Output" minOccurs="0" maxOccurs="2">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TextLine" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="Row" type="xs:byte" use="optional"/>
+											<xs:attribute name="Column" type="xs:byte" use="optional"/>
+											<xs:attribute name="CharSet" type="xs:byte" use="optional"/>
+											<xs:attribute name="Erase" type="xs:boolean" use="optional"/>
+											<xs:attribute name="Echo" type="xs:boolean" use="optional"/>
+											<xs:attribute name="Cursor" type="xs:boolean" use="optional"/>
+											<xs:attribute name="TimeOut" type="xs:byte" use="optional"/>
+											<xs:attribute name="Color" type="ColorType" use="optional"/>
+											<xs:attribute name="Alignment" type="AlignmentType" use="optional"/>
+											<xs:attribute name="Height" type="HeightType" use="optional"/>
+											<xs:attribute name="Width" type="WidthType" use="optional"/>
+											<xs:attribute name="CharStyle1" type="CharStyleType" use="optional"/>
+											<xs:attribute name="CharStyle2" type="CharStyleType" use="optional"/>
+											<xs:attribute name="CharStyle3" type="CharStyleType" use="optional"/>
+											<xs:attribute name="PaperCut" type="xs:boolean" use="optional"/>
+											<xs:attribute name="MenuItem" use="optional">
+												<xs:simpleType>
+													<xs:restriction base="xs:integer">
+														<xs:minInclusive value="0"/>
+														<xs:maxInclusive value="99"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Buzzer" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:boolean">
+											<xs:attribute name="DurationBeep" type="xs:integer" use="optional"/>
+											<xs:attribute name="CounterBeep" type="xs:integer" use="optional"/>
+											<xs:attribute name="DurationPause" type="xs:integer" use="optional"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="OutSecureData" type="SecureDataFlow" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="MAC" type="MACType" minOccurs="0"/>
+							<xs:element name="ImageFile" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="OutDeviceTarget" type="DeviceType" use="required"/>
+						<xs:attribute name="InputSynchronize" type="xs:boolean" use="optional"/>
+						<xs:attribute name="Complete" type="xs:boolean" use="optional"/>
+						<xs:attribute name="Immediate" type="xs:boolean" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Input" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Command" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="CommandType">
+											<xs:attribute name="Length" type="xs:integer" use="optional"/>
+											<xs:attribute name="MinLength" type="xs:integer" use="optional"/>
+											<xs:attribute name="MaxLength" type="xs:integer" use="optional"/>
+											<xs:attribute name="Decimals" type="xs:integer" use="optional"/>
+											<xs:attribute name="Separator" type="SeparatorType" use="optional"/>
+											<xs:attribute name="CardReadElement" type="CardReadType" use="optional"/>
+											<xs:attribute name="TimeOut" type="xs:integer" use="optional"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InSecureData" type="SecureDataFlow" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="InDeviceTarget" type="DeviceType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Event" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EventData">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Dispenser" type="xs:unsignedByte" minOccurs="0"/>
+										<xs:element name="CardIdent" type="CardValueType" minOccurs="0"/>
+										<xs:element name="RestrictionCodes" type="ProductGroupType" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="EventType" type="EventTypes" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<!-- https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=7900 - RS19526_ReceiptData SDD -->
+				<xs:element name="MetaData" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="MetaDataElement" type="KeyValuePair" minOccurs="0" maxOccurs="unbounded" />
+						</xs:sequence>
+						<xs:attribute name="MetaDataType" type="MetaDataTypes" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<!-- end https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=7900 - RS19526_ReceiptData SDD -->
+			</xs:sequence>
+			<xs:attribute name="RequestType" type="DeviceRequestType" use="required"/>
+			<xs:attribute name="ApplicationSender" type="ApplicationType" use="required"/>
+			<xs:attribute name="WorkstationID" type="WorkstationIDType" use="optional"/>
+			<xs:attribute name="TerminalID" type="TerminalIDType" use="optional"/>
+			<xs:attribute name="POPID" type="POPIDType" use="optional"/>
+			<xs:attribute name="RequestID" type="RequestIDType" use="required"/>
+			<xs:attribute name="SequenceID" type="SequenceIDType" use="optional"/>
+			<!-- Dave Milne dave.milne@fisglobal.com addede in RelatedRequestID as referring to the RequestID of the CardServiceRequest or ServiceRequest which caused
+			     this message to be produced
+			-->
+			<xs:attribute name="RelatedRequestID" type="RequestIDType" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IFSF_BasicTypesCards.xsd -->
+<!-- Based on Wincor Nixdorf O.P.I. Interface Specification V1.3 and Wincor Nixdorf O.P.I. Implementation Guidelines V1.1.1 -->
+<!-- Version: 1.1.1-2 based on 1.1.1 --> 
+<!-- Date:    15.01.2009 -->
+<!-- Author:  Joachim Seefeldt (Wincor Nixdorf International GmbH) -->
+<!---->
+<!-- History:   -->
+<!-- 08.04.2011   J. Seefeldt      CardCircuitType extended with "IC-Gutscheinkarte", "PAYBACK" und "Amex-Rewards" />-->
+<!---->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:include schemaLocation="IFSF_DR_UnitOfMeasureCode.xsd"/>
+	<xs:include schemaLocation="DR_BasicTypes.xsd"/>
+	<xs:annotation>
+		<xs:documentation>Common Types definitions for IFSF POS / EPS Interface  - version 1.0</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="CardPANType">
+		<xs:annotation>
+			<xs:documentation> Generic Card PAN</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="28"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardTrackByteType">
+		<xs:annotation>
+			<xs:documentation>GenericCardTrack image (1, 2, or 3 Ref. ISO) byte</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:hexBinary"/>
+	</xs:simpleType>
+	<xs:complexType name="CardTrack">
+		<xs:annotation>
+			<xs:documentation>GenericCardTrack image (1, 2, or 3 Ref. ISO)</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Byte" type="CardTrackByteType" minOccurs="0" maxOccurs="104"/>
+			<xs:element name="Ascii" minOccurs="0" maxOccurs="104"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="CardCircuitType">
+		<xs:annotation>
+			<xs:documentation>Type of card circuit - Can be extended (the list cannot be complete with existing products: amending this list will not imply interface revision)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+        		<xs:enumeration value="AgipCard"/>
+        		<xs:enumeration value="Akzenta"/>
+        		<xs:enumeration value="Allcash"/>
+        		<xs:enumeration value="Allianzcard"/>
+        		<xs:enumeration value="Amex"/>
+        		<xs:enumeration value="Amex-Rewards"/>
+				<xs:enumeration value="Aral"/>
+        		<xs:enumeration value="Aurore"/>
+		        <xs:enumeration value="BayWa"/>
+		        <xs:enumeration value="BFTCRD"/>
+		        <xs:enumeration value="Boecker"/>
+		        <xs:enumeration value="BP"/>
+		        <xs:enumeration value="BreuningerExtern"/>
+		        <xs:enumeration value="Breuninger"/>
+		        <xs:enumeration value="BSW"/>
+		        <xs:enumeration value="BWE"/>
+		        <xs:enumeration value="CardPayBonus"/>
+		        <xs:enumeration value="CardTech"/>
+		        <xs:enumeration value="CAST"/>
+		        <xs:enumeration value="CASTBonus"/>
+		        <xs:enumeration value="ComfortCard"/>
+		        <xs:enumeration value="Conrad"/>
+		        <xs:enumeration value="CUP"/>
+		        <xs:enumeration value="DEA"/>
+		        <xs:enumeration value="DealerCard"/>
+		        <xs:enumeration value="Diners"/>
+		        <xs:enumeration value="DKV"/>
+		        <xs:enumeration value="DKVSEL"/>
+		        <xs:enumeration value="DKVSVG"/>
+		        <xs:enumeration value="Douglas"/>
+		        <xs:enumeration value="DresdnerPlus"/>
+		        <xs:enumeration value="EAPS"/>
+		        <xs:enumeration value="EssoCard"/>
+		        <xs:enumeration value="EuroCard"/>
+		        <xs:enumeration value="euroShell CRT"/>
+		        <xs:enumeration value="euroShell Privat"/>
+		        <xs:enumeration value="euroShell"/>
+		        <xs:enumeration value="EUTRAF"/>
+		        <xs:enumeration value="EVoucher"/>
+		        <xs:enumeration value="Family dent"/>
+		        <xs:enumeration value="Fraenky-Noris"/>
+		        <xs:enumeration value="GDB"/>
+		        <xs:enumeration value="GDP"/>
+		        <xs:enumeration value="Geldkarte"/>
+		        <xs:enumeration value="GermanDebitEcCash"/>
+		        <xs:enumeration value="GermanDebitELV"/>
+		        <xs:enumeration value="GermanDebitOLV"/>
+		        <xs:enumeration value="GermanDebitPOZ"/>
+		        <xs:enumeration value="girocard"/>
+		        <xs:enumeration value="girocardELV"/>
+		        <xs:enumeration value="girocardOLV"/>
+		        <xs:enumeration value="Hagebau"/>
+		        <xs:enumeration value="HappyDigit"/>
+		        <xs:enumeration value="HEM"/>
+		        <xs:enumeration value="Herkules"/>
+		        <xs:enumeration value="Hornbach"/>
+		        <xs:enumeration value="HornbachGutscheinkarte"/>
+		        <xs:enumeration value="HornbachProfiCard"/>
+		        <xs:enumeration value="HornbachProjektWeltkarte"/>
+		        <xs:enumeration value="ICPINIT"/>
+		        <xs:enumeration value="ICPNAT"/>
+				<xs:enumeration value="IC-Gutscheinkarte"/>
+		        <xs:enumeration value="IKEAFamilyPlus"/>
+		        <xs:enumeration value="IntercardCard"/>
+		        <xs:enumeration value="JCB"/>
+		        <xs:enumeration value="Lomo"/>
+		        <xs:enumeration value="LunchCard"/>
+		        <xs:enumeration value="Maestro"/>
+		        <xs:enumeration value="MasterCard"/>
+		        <xs:enumeration value="NationalDebit"/>
+		        <xs:enumeration value="Other"/>
+		        <xs:enumeration value="PAYBACK"/>
+				<xs:enumeration value="Polo"/>
+		        <xs:enumeration value="Praesentcard"/>
+		        <xs:enumeration value="Routex"/>
+		        <xs:enumeration value="RUEFACH"/>
+		        <xs:enumeration value="SGCard"/>
+		        <xs:enumeration value="ShoppingPlus"/>
+		        <xs:enumeration value="SiteCard"/>
+		        <xs:enumeration value="SOliver"/>
+		        <xs:enumeration value="TaxFree"/>
+		        <xs:enumeration value="UTA"/>
+		        <xs:enumeration value="VISA"/>
+		        <xs:enumeration value="VISAElektron"/>
+		        <xs:enumeration value="VPAY"/>
+		        <xs:enumeration value="VWKundenclub"/>
+		        <xs:enumeration value="Westfalen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceType">
+		<xs:annotation>
+			<xs:documentation> GenericDeviceList (simple and composite)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CashierDisplay"/>
+			<xs:enumeration value="CustomerDisplay"/>
+			<xs:enumeration value="PrinterReceipt"/>
+			<xs:enumeration value="Printer"/>
+			<xs:enumeration value="ICCrw"/>
+			<xs:enumeration value="CardReader"/>
+			<xs:enumeration value="PinEntryDeviceCardReader"/>
+			<xs:enumeration value="PinPad"/>
+			<xs:enumeration value="PEDReaderPrinter"/>
+			<xs:enumeration value="MSR"/>
+			<xs:enumeration value="RFID"/>
+			<xs:enumeration value="BarcodeScanner"/>
+			<xs:enumeration value="CashierKeyboard"/>
+			<xs:enumeration value="CashierTerminal"/>
+			<xs:enumeration value="CustomerKeyboard"/>
+			<xs:enumeration value="CustomerTerminal"/>
+			<xs:enumeration value="Log"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardRequestType">
+		<xs:annotation>
+			<xs:documentation>IFSF POS/EPS interface - Card Request messages</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			
+			<!-- dave.milne@fisglobal.com : BalanceEnquiry is a FIS extension which embodies the request to do a balance enquiry -->			
+			<xs:enumeration value="BalanceEnquiry"/>
+			
+			<!-- dave.milne@fisglobal.com : Prompt is a FIS extension which embodies the request to prompt for something on the PED -->			
+			<xs:enumeration value="Prompt"/>			
+			
+			<xs:enumeration value="CardPayment"/>
+			
+			<!-- dave.milne@fisglobal.com:  CardPaymentPromptCashback is a FIS extension ; returns back if the Card supports cashback without completing the transaction, and performs
+			the transaction if it does not support balance enquiry. This is used in situation where the operator wishes to know if the card supports cashback
+			before asking the user if they would like any cashback.-->
+			
+			<xs:enumeration value="CardPaymentPromptCashback"/>			
+
+			<xs:enumeration value="CardSwipe"/>
+			<xs:enumeration value="LoyaltySwipe"/>
+			<xs:enumeration value="CardPaymentLoyaltyAward"/>
+			<xs:enumeration value="LoyaltyAward"/>
+			<xs:enumeration value="CardPreAuthorisation"/>
+			<xs:enumeration value="CardFinancialAdvice"/>
+			<xs:enumeration value="CardPreAuthorisationLoyaltySwipe"/>
+			<xs:enumeration value="CardFinancialAdviceLoyaltyAward"/>
+			<xs:enumeration value="LoyaltyRedemption"/>
+			<xs:enumeration value="CardPaymentLoyaltyRedemption"/>
+			<xs:enumeration value="PaymentReversal"/>
+			<xs:enumeration value="PaymentLoyaltyReversal"/>
+			<xs:enumeration value="PaymentRefund"/>
+			<xs:enumeration value="PaymentLoyaltyRefund"/>
+			<xs:enumeration value="LoyaltyAwardReversal"/>
+			<xs:enumeration value="LoyaltyRedemptionReversal"/>
+			<xs:enumeration value="LoyaltyBalanceQuery"/>
+			<xs:enumeration value="LoyaltyLinkCard"/>
+			<xs:enumeration value="LoyaltyPointsTransfer"/>
+			<xs:enumeration value="PINchange"/>
+			<xs:enumeration value="TicketReprint"/>
+			<xs:enumeration value="StoreValueInCard"/>
+			<xs:enumeration value="RefundValueFromCard"/>
+			<xs:enumeration value="CardActivate"/>
+			<xs:enumeration value="CardStop"/>
+			<xs:enumeration value="CardBalanceQuery"/>
+			<xs:enumeration value="RepeatLastMessage"/>
+			<xs:enumeration value="AbortRequest"/>
+			<xs:enumeration value="LoyaltyPIN"/>			<!-- MARBRI: Added for Ladbrokes -->
+			<xs:enumeration value="LoyaltyDisplayBalance"/>	<!-- MARBRI: Added for Ladbrokes -->
+
+			
+			<xs:enumeration value="Rating"/>	<!--https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=5398 - RS18765 Trurating -->
+			
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceRequestType">
+		<xs:annotation>
+			<xs:documentation>IFSF POS/EPS interface - Device request messages</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Input"/>
+			<xs:enumeration value="Output"/>
+			<xs:enumeration value="SecureInput"/>
+			<xs:enumeration value="SecureOutput"/>
+			<xs:enumeration value="AbortInput"/>
+			<xs:enumeration value="AbortOutput"/>
+			<xs:enumeration value="Event"/>
+			<xs:enumeration value="RepeatLastMessage"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceRequestType">
+		<xs:annotation>
+			<xs:documentation>IFSF POS/EPS interface - Service Request messages</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Diagnosis"/>
+			<xs:enumeration value="SendOfflineTransactions"/>
+			<xs:enumeration value="Reconciliation"/>
+			<xs:enumeration value="QueryLastReconciliation"/>			
+			<xs:enumeration value="ReconciliationWithClosure"/>
+			<xs:enumeration value="GlobalReconciliation"/>
+			<xs:enumeration value="GlobalReconciliationWithClosure"/>
+			<xs:enumeration value="Administration"/>
+			<xs:enumeration value="Login"/>
+			<xs:enumeration value="Logoff"/>
+			<xs:enumeration value="OnlineAgent"/>
+			<xs:enumeration value="RepeatLastMessage"/>
+			<!--  FIS Extension EPS 2.3.5 -->
+			<!--  Bugzilla  Bug 4567 - RS18866 New Security Swipe message  -->
+			<xs:enumeration value="SecuritySwipe"/>
+			<!--  Bug 4570 - RS18866 End of Day / Login Breakdown -->
+			<xs:enumeration value="ShiftQuery"/>
+			<!--  Bug 5935 - RS19053_RCR003 E355 Barcode Scanning -->
+			<xs:enumeration value="BarcodeScan"/>
+			<xs:enumeration value="SetDeviceProxy"/>
+			
+			<!--  end FIS Extension -->
+			
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CommandType">
+		<xs:annotation>
+			<xs:documentation>Minimum table - Can be extended for proprietary commands (extending this list for PinPads will not imply interface revision)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GetDecimals"/>
+			<xs:enumeration value="GetChar"/>
+			<xs:enumeration value="GetMenu"/>
+			<xs:enumeration value="GetAmount"/>
+			<xs:enumeration value="GetConfirmation"/>
+			<xs:enumeration value="GetAnyKey"/>
+			<xs:enumeration value="CheckPIN"/>
+			<xs:enumeration value="ProcessPIN"/>
+			<xs:enumeration value="RequestCard"/>
+			<xs:enumeration value="RequestTypeCard"/>
+			<xs:enumeration value="ReadCard"/>
+			<xs:enumeration value="TransferData"/>
+			<xs:enumeration value="ValidateMAC"/>
+			<xs:enumeration value="CalculateMAC"/>
+			<xs:enumeration value="UpdateKeys"/>
+			<xs:enumeration value="Other">
+				<xs:annotation>
+					<xs:documentation>To explicitly address the possibility to extend the commands according to each supplier pin-pad implementation.
+PinPad independence will be subject for future extension of the interface.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SecureDataFlow">
+		<xs:annotation>
+			<xs:documentation>Hex chain (encrypted) data - Format free, TLV advised</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Hex" type="xs:hexBinary" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MACType">
+		<xs:annotation>
+			<xs:documentation>Hex chain (Maced data)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Hex" type="xs:hexBinary" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TransactionType">
+		<xs:annotation>
+			<xs:documentation>For reconciliation purpose: conform to ISO8583</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Credit"/>
+			<xs:enumeration value="Debit"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductGroupType">
+		<xs:annotation>
+			<xs:documentation>Product Group or code - Adviced NACS codes, but is not compulsory</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="3"/>
+			<xs:fractionDigits value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ApplicationType">
+		<xs:annotation>
+			<xs:documentation>Free format 8 char - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="TerminalIDType">
+		<xs:annotation>
+			<xs:documentation>Free format 8 char - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="RequestIDType">
+		<xs:annotation>
+			<xs:documentation>Free format 8 char - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="WorkstationIDType">
+		<xs:annotation>
+			<xs:documentation>Free format 8 char - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="POPIDType">
+		<xs:annotation>
+			<xs:documentation>3 digit Point of Payment ID</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="BatchCodeType">
+		<xs:annotation>
+			<xs:documentation>Free format string 1 to 10 length</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="STANtype">
+		<xs:annotation>
+			<xs:documentation>Integer 6 digit - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="6"/>
+			<xs:fractionDigits value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AuthorisationCodeType">
+		<xs:annotation>
+			<xs:documentation>Free format up to 20 char - Implementation specific (Authorisation code 9 chars, Approval code 3 num, Other free)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AcquirerType">
+		<xs:annotation>
+			<xs:documentation>Free format up to 20 char - Implementation specific</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SequenceIDType">
+		<xs:annotation>
+			<xs:documentation>Integer 0..9 - Single message = 0, multiple 0,1,2..</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventTypes">
+		<xs:annotation>
+			<xs:documentation>Event types for Device request/response</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CardRead"/>
+			<xs:enumeration value="DispenserSelected"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RequestResultType">
+		<xs:annotation>
+			<xs:documentation>IFSF POS/EPS interface - Response possibilities</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Success"/>
+			<xs:enumeration value="PartialFailure"/>
+			<xs:enumeration value="Failure"/>
+			<xs:enumeration value="DeviceUnavailable"/>
+			<xs:enumeration value="Busy"/>
+			<xs:enumeration value="LoggedOut"/>
+			<xs:enumeration value="Aborted"/>
+			<xs:enumeration value="TimedOut"/>
+			<xs:enumeration value="CommunicationError"/>
+			<xs:enumeration value="FormatError"/>
+			<xs:enumeration value="ParsingError"/>
+			<xs:enumeration value="ValidationError"/>
+			<xs:enumeration value="MissingMandatoryData"/>
+			<xs:enumeration value="UnknownCard"/>
+			<xs:enumeration value="AmountError"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InputType">
+		<xs:annotation>
+			<xs:documentation>Device Request input type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OpenData"/>
+			<xs:enumeration value="SecureFlow"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardReadType">
+		<xs:annotation>
+			<xs:documentation>Preemptive Specific type of card choice</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Magstripe"/>
+			<xs:enumeration value="ICC"/>
+			<xs:enumeration value="EMV"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ColorType">
+		<xs:annotation>
+			<xs:documentation>Text line Printer(/Display) basic colors (colors not supported just black or any)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="White"/>
+			<xs:enumeration value="Black"/>
+			<xs:enumeration value="Red"/>
+			<xs:enumeration value="Green"/>
+			<xs:enumeration value="Yellow"/>
+			<xs:enumeration value="Blue"/>
+			<xs:enumeration value="Grey"/>
+			<xs:enumeration value="Brown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlignmentType">
+		<xs:annotation>
+			<xs:documentation>Text line Printer(/Display) alignment of text line (if not supported: left)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="Justified"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeightType">
+		<xs:annotation>
+			<xs:documentation>Text Line Printer(/Display) height of chars  (if not supported, just normal)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Single"/>
+			<xs:enumeration value="Double"/>
+			<xs:enumeration value="Half"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WidthType">
+		<xs:annotation>
+			<xs:documentation>Text Line Printer(/Display) widht of chars  (if not supported, just normal)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Single"/>
+			<xs:enumeration value="Double"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CharStyleType">
+		<xs:annotation>
+			<xs:documentation>Text Line Printer(/Display) style of chars (if not supported, just normal)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Normal"/>
+			<xs:enumeration value="Bold"/>
+			<xs:enumeration value="Italic"/>
+			<xs:enumeration value="Underlined"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeparatorType">
+		<xs:annotation>
+			<xs:documentation>Separator used for decimals input from PinPad/Cashier Keyboard</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Dot"/>
+			<xs:enumeration value="Comma"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="InputValueType">
+		<xs:annotation>
+			<xs:documentation>Specifies the type of input received from the device (some are card reader specific, other PinPad/Cashier Keyboard specific)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Track1" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Track2" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Track3" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ICC" type="SecureDataFlow" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific - this includes any type of chip card (also contactless, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Barcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InBoolean" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PinPad/Cashier Keyboard specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InNumber" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PinPad/Cashier Keyboard specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InString" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PinPad/Cashier Keyboard specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardPAN" type="CardPANType" minOccurs="0"/>
+			<xs:element name="StartDate" type="CardDate" minOccurs="0"/>
+			<xs:element name="ExpiryDate" type="CardDate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CardDate">
+		<xs:annotation>
+		<!--  FIS -->
+		<!--  we implemented YYMM as it wasnt clear in the documentation. Sorry -->
+			<xs:documentation>YYMM date format for card</xs:documentation>
+		<!--  
+			<xs:documentation>MMYY date format for card</xs:documentation>
+		-->
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CardValueType">
+		<xs:annotation>
+			<xs:documentation>Specifies the card identification to be transmitted to the application</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Track1" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Track2" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Track3" type="CardTrack" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ICC" type="SecureDataFlow" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific - this includes any type of chip card (also contactless, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Barcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Card Reader specific</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="InString" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PinPad/Cashier Keyboard specific</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardPAN" type="CardPANType" minOccurs="0"/>
+			<xs:element name="StartDate" type="CardDate" minOccurs="0"/>
+			<xs:element name="ExpiryDate" type="CardDate" minOccurs="0"/>
+			<xs:element name="CardCircuit" type="CardCircuitType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AgentOnlineType">
+		<xs:annotation>
+			<xs:documentation>Application specific, not related to cards (extending this list will not imply interface revision)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MobilePhonePrepaid">
+				<xs:annotation>
+					<xs:documentation>Recharge of Prepaid cards/accounts of mobile phones. No payment included.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SaleItemType">
+		<xs:annotation>
+			<xs:documentation>SaleItem</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProductCode" type="ProductGroupType"/>
+			<xs:element name="Amount" type="MonetaryAmount"/>
+			<xs:element name="UnitMeasure" type="UnitOfMeasureCode" minOccurs="0"/>
+			<xs:element name="UnitPrice" type="MonetaryAmount" minOccurs="0"/>
+			<xs:element name="Quantity" type="xs:float" minOccurs="0"/>
+			<xs:element name="TaxCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AdditionalProductCode" type="GTIN" minOccurs="0"/>
+			<xs:element name="AdditionalProductInfo" type="xs:string" minOccurs="0"/>
+			<xs:element name="TypeMovement" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+						<xs:enumeration value="0"/>
+						<xs:enumeration value="1"/>
+						<xs:enumeration value="2"/>
+						<xs:enumeration value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SaleChannel" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="CompanyOwned"/>
+						<xs:enumeration value="DealerOwned"/>
+						<xs:enumeration value="ThirdPartyOwned"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ItemID" type="xs:ID" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="DeviceProxy">		<!-- MARBRI added for Ladbrokes/Aurum -->
+		<xs:annotation>
+			<xs:documentation>Device proxy port and IP address</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Port"      type="PortNumber" use="required"/>
+		<xs:attribute name="IPAddress" type="xs:string"/>
+		<xs:attribute name="HostName" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:simpleType name="PortNumber">		<!-- MARBRI added for Ladbrokes/Aurum -->
+		<xs:annotation>
+			<xs:documentation>A port number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			 <xs:minInclusive value="1"/>
+		         <xs:maxInclusive value="65535"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Borrowed from http://www.codesynthesis.com/projects/xsstl/xsstl/ipv4-address.xsd  -->
+	<xs:simpleType name="IPv4Address">		<!-- MARBRI added for Ladbrokes/Aurum -->
+		<xs:annotation>
+			<xs:documentation>IPv4 address in the dotted-decimal notation.</xs:documentation>
+		</xs:annotation>
+
+		<xs:restriction base="xs:string">
+			<xs:pattern value="((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])"/>
+		</xs:restriction>
+	</xs:simpleType>
+  
+	<!-- Wincor Nixdorf Extension begin -->
+	<xs:simpleType name="AuthorisationMethodType">
+		<xs:annotation>
+			<xs:documentation>CardRequest AuthorisationMethodType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Online"/>
+			<xs:enumeration value="Offline"/>
+			<xs:enumeration value="Manual"/>
+			<xs:enumeration value="Inhouse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CardCircuitStateType">
+		<xs:annotation>
+			<xs:documentation>CardRequest CardCircuitStateType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Accepted"/>
+			<xs:enumeration value="Denied"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymodeType">
+		<xs:annotation>
+			<xs:documentation>ServiceRequest PaymodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Cash"/>
+			<xs:enumeration value="Card"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Wincor Nixdorf Extension end -->
+	
+	<!--  FIS Extension contact dave.milne@fisglobal.com-->
+	
+	<xs:simpleType name="ParameterName">
+		<xs:annotation>
+			<xs:documentation>Parameter name</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="arg1"/>
+			<xs:enumeration value="arg2"/>
+			<xs:enumeration value="arg3"/>
+			<xs:enumeration value="arg4"/>
+			<xs:enumeration value="text"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="TemplateId">		
+		<xs:annotation>
+			<xs:documentation>Number of a template</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<xs:simpleType name="StringValue">
+  		<xs:restriction base="xs:string">
+	  		<xs:maxLength value="32"/>
+  		</xs:restriction>
+	</xs:simpleType>
+		
+	<xs:complexType name="Parameter">
+	  <xs:simpleContent>
+	    <xs:extension base="StringValue">
+		   <xs:attribute name="Name" type="ParameterName" />
+	    </xs:extension>
+	  </xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="Parameters">
+		<xs:annotation>
+			<xs:documentation>Parameter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Parameter" type="Parameter" maxOccurs="5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>	
+		<xs:attribute name="Name" type="xs:string" use="optional"/>	
+	</xs:complexType>
+
+	
+	<xs:complexType name="Template">
+	<xs:annotation>
+			<xs:documentation>Template encapsulating an RPC</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Parameters" type="Parameters" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="TemplateId" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Prompt">
+		<xs:sequence>
+			<xs:element name="Template" type="Template"/>
+		</xs:sequence>
+		<xs:attribute name="DeviceTarget" type="DeviceType"/>
+	</xs:complexType>
+	
+	<!--  FIS Extension in EPS 2.5 dave.milne@fisglobal.com -->
+	<!--  Bugzilla id=4564 Tokenisation changes -->
+	<xs:simpleType name="CardTokenType">
+		<xs:annotation>
+			<xs:documentation>Card Token</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="9"/>
+			<xs:maxLength value="28"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<xs:simpleType name="CardIssueType">
+		<xs:annotation>
+			<xs:documentation>Card Token</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<!--  FIS Extension in EPS 2.5 dave.milne@fisglobal.com -->
+	<!--  Bug 4570 - RS18866 End of Day / Login Breakdown -->
+	
+	<xs:simpleType name="CardReportingNameType">
+		<xs:annotation>
+			<xs:documentation>The name of a cardn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		</xs:restriction>
+	</xs:simpleType>	
+		
+	
+	<xs:simpleType name="ReconciliationStatusType">
+		<xs:restriction base="xs:string">
+       		<xs:enumeration value="NotStarted"/>
+       		<xs:enumeration value="InProgress"/>
+       		<xs:enumeration value="Reconciled"/>
+       		<xs:enumeration value="FailedToReconcile"/>
+    	</xs:restriction>	
+	</xs:simpleType>	
+	
+	<xs:simpleType name="PhysicalTerminalIDType">
+		<xs:annotation>
+			<xs:documentation>Physical Terminal Id. Verifone ones are numberic, marking as string as more flexible</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--  end Bug 4570 - RS18866 End of Day / Login Breakdown -->
+	
+	<!-- Bug 4957 - EPS client should be capable of returning the serial number and physical terminal id -->
+	
+    <xs:simpleType name="SerialNumberType">
+		<xs:annotation>
+			<xs:documentation>Physical Terminal Id. Verifone ones are numberic, marking as string as more flexible</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- end bug 4957 -->
+	
+	<!-- David Milne 5398 - RS18765 Trurating  -->
+	<xs:simpleType name="RatingResponseCode">
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="RATED" />
+                <xs:enumeration value="NOT_RATED" />
+                <xs:enumeration value="COMMS_ERROR" />
+                <xs:enumeration value="TIMEOUT" />
+                <xs:enumeration value="GENERAL_ERROR" />
+                <xs:enumeration value="NO_QUESTION" />
+              </xs:restriction>
+    </xs:simpleType>
+	
+	<!-- end 5398 - RS18765 Trurating  -->
+	
+	<!-- end https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=7900 - RS19526_ReceiptData SDD -->
+	<xs:simpleType name="MetaDataTypes">
+		<xs:annotation>
+			<xs:documentation>MetaData types - description of what data the meta data is about</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="KeyValuePair">
+		<xs:annotation>
+			<xs:documentation>Key value pair</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Key" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- end https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=7900 - RS19526_ReceiptData SDD -->
+	
+	<!--  FIS Extension end -->
+</xs:schema>

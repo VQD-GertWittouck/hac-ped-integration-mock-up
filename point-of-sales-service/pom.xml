@@ -48,6 +48,77 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-xjc-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>generate-sources-card-request</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated-sources/</sourceRoot>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/ped/CardRequest.xsd</xsd>
+									<packagename>com.vqd.ped.electronicpaymentservice.model.ped.cardRequest</packagename>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-sources-ped-card-response</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated-sources/</sourceRoot>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/ped/CardResponse.xsd</xsd>
+									<packagename>com.vqd.ped.electronicpaymentservice.model.ped.cardResponse</packagename>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-sources-ped-service-request</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated-sources/</sourceRoot>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/ped/ServiceRequest.xsd</xsd>
+									<packagename>com.vqd.ped.electronicpaymentservice.model.ped.serviceRequest</packagename>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-sources-ped-service-response</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated-sources/</sourceRoot>
+							<xsdOptions>
+								<xsdOption>
+									<xsd>${basedir}/src/main/resources/ped/ServiceResponse.xsd</xsd>
+									<packagename>com.vqd.ped.electronicpaymentservice.model.ped.serviceResponse</packagename>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

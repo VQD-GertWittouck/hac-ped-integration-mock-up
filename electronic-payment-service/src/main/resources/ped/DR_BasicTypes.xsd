@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2001, ARTS-IXRetail, DRA (NCR, et al) -->
+<!-- edited by Jim Galloway (NCR) -->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:attributeGroup name="LinkGroup">
+		<xs:annotation>
+			<xs:documentation>expl: common definition of link attributes</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="href" type="xs:anyURI" use="optional"/>
+		<xs:attribute name="imgsrc" type="xs:anyURI" use="optional"/>
+	</xs:attributeGroup>
+	<xs:simpleType name="MonetaryAmount">
+		<xs:annotation>
+			<xs:documentation>expl: common definition of monetary amount data type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="NameToken">
+		<xs:annotation>
+			<xs:documentation>expl: alphanumeric identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="\c+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GTIN">
+		<xs:annotation>
+			<xs:documentation>expl:  EAN-UCC Global Trade Item Number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="99999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AccountNumber">
+		<xs:annotation>
+			<xs:documentation>ARTS: AccountNumber </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="Percentage">
+		<xs:annotation>
+			<xs:documentation>expl: natural, non-negative percentage type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="5"/>
+			<xs:fractionDigits value="5"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Text">
+		<xs:annotation>
+			<xs:documentation>expl:  textual description for rendering document</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="StructuredText">
+		<xs:annotation>
+			<xs:documentation>consider as alternative to Text</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:any namespace="http://www.w3.org/1999/xhtml" processContents="skip" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="http://www.w3.org/1999/xhtml"/>
+	</xs:complexType>
+	<xs:complexType name="Amount">
+		<xs:annotation>
+			<xs:documentation>ARTS: Amount -- a generalized monetary amount attribute </xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="MonetaryAmount"/>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

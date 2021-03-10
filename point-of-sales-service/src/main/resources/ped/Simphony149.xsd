@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- targetNamespace="http://www.fisglobal.com/TransaxPay/MicrosSymphony149/namespace" -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!--  Dave Milne dave.milne@fisglobal.com -->
+<!--  Coded from Micros Gateway Services Device Interface Specification v1.49 -->
+
+
+<!--  
+	//https://ukbiamplx01.fnfis.com/bugzilla/show_bug.cgi?id=5492  - Sundry EPS Micros Symphony issues
+    <xs:simpleType name="SequenceNo">
+    	<xs:annotation>
+    		<xs:documentation>
+    		The transaction number or the original transaction number. Refer to Section 3.3.1
+    		</xs:documentation>
+    	</xs:annotation>
+		<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="1"/>
+         	<xs:maxInclusive value="999999"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+-->
+    
+    <xs:simpleType name="SequenceNo">
+    	<xs:annotation>
+    		<xs:documentation>
+    		The transaction number or the original transaction number. Refer to Section 3.3.1
+    		</xs:documentation>
+    	</xs:annotation>
+		<xs:restriction base="xs:string">
+	    	<xs:maxLength value="6"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    
+	<xs:simpleType name="TransType">
+	   	<xs:annotation>
+    		<xs:documentation>
+    		Transaction Type. Refer to section 3.3.2
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:string">
+			<xs:enumeration value="01"><xs:annotation><xs:documentation>Purchase</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="02"><xs:annotation><xs:documentation>Sale andCash</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="03"><xs:annotation><xs:documentation>Refund</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="04"><xs:annotation><xs:documentation>Reversal</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="05"><xs:annotation><xs:documentation>Authorization</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="06"><xs:annotation><xs:documentation>Top-up Authorization</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="07"><xs:annotation><xs:documentation>Sales Completion</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="08"><xs:annotation><xs:documentation>Void</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="09"><xs:annotation><xs:documentation>Cash</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="10"><xs:annotation><xs:documentation>(EOD) Settlement</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="11"><xs:annotation><xs:documentation>Settlement Inquiry</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="12"><xs:annotation><xs:documentation>Sales Adjustment</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="13"><xs:annotation><xs:documentation>Swipe Card</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="14"><xs:annotation><xs:documentation>Print Receipt</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="15"><xs:annotation><xs:documentation>DCC Choice</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="16"><xs:annotation><xs:documentation>Authorization Cancel/Release</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="17"><xs:annotation><xs:documentation>Echo-test</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="18"><xs:annotation><xs:documentation>Re-Print Last Receipt</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="19"><xs:annotation><xs:documentation>Re-Print Receipt (OriginalRRN will be sent)</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="20"><xs:annotation><xs:documentation>Status Inquiry</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="21"><xs:annotation><xs:documentation>DCC Opt-out</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="22"><xs:annotation><xs:documentation>DCC Inquiry</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="23"><xs:annotation><xs:documentation>Get Token</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="24"><xs:annotation><xs:documentation>Get PAN</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="25"><xs:annotation><xs:documentation>Get Token Bulk (refer to Section 3.6)</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="26"><xs:annotation><xs:documentation>Get PAN Bulk (refer to Section 3.6)</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="27"><xs:annotation><xs:documentation>Balance Inquiry</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="28"><xs:annotation><xs:documentation>Reload Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="29"><xs:annotation><xs:documentation>Activate Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="30"><xs:annotation><xs:documentation>Redeem Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="31"><xs:annotation><xs:documentation>Issue Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="32"><xs:annotation><xs:documentation>Close Card Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="33"><xs:annotation><xs:documentation>DeActivate Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="34"><xs:annotation><xs:documentation>Void Redeem Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="35"><xs:annotation><xs:documentation>Refund Gift/SVC</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="36"><xs:annotation><xs:documentation>Cancel</xs:documentation></xs:annotation></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+
+	<xs:simpleType name="YNFlag">
+    	<xs:restriction base="xs:string">
+    	 <xs:enumeration value="Y"/>
+    	  <xs:enumeration value="N"/>
+    	</xs:restriction>
+    </xs:simpleType>
+
+
+	<xs:simpleType name="ExpiryDate">
+	<xs:annotation>
+	<xs:documentation>
+	The expiration date of the card (PAN).
+-Without encryption, this is expiration date in plaintext. The format is YYMM.
+- If encryption, this is the BCD values after 3DES encryption, maximum 16 bytes.
+This is optional. Refer to Section 3.3.20.
+Normally the expiration date is returned in the response upon a successful capture of card
+data. However for those referenced transactions, including Top-up Authorization, Sales
+Completion and Sales Adjustment, the expiration date may be present in the request.
+</xs:documentation>
+	</xs:annotation>
+	<xs:restriction base="xs:string">
+	<!--  not going to support encryption, so might as well validate the string -->
+	<xs:pattern value="[0-9][0-9][0-1][0-9]"></xs:pattern>
+   	</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SiteID">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="15"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="WSNo">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="16"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="EMVData">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="1024"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="Amount">
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="999999999999"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    
+	<xs:simpleType name="Currency">
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="999"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="CancelReason">
+    	<xs:annotation>
+    	<xs:documentation>
+    	3.3.6 CancelReason
+    	The reason for the cancellation. Present only if the transaction is a Void or Reversal. 
+    	</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:string">
+    	<xs:enumeration value="01"><xs:annotation><xs:documentation>Timeout Reversal</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="02"><xs:annotation><xs:documentation>Transaction Void</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="03"><xs:annotation><xs:documentation>Signature Declined Void</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="04"><xs:annotation><xs:documentation>User Cancelled</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="05"><xs:annotation><xs:documentation>EMV Declined</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="06"><xs:annotation><xs:documentation>Others</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="07"><xs:annotation><xs:documentation>Power Failure</xs:documentation></xs:annotation></xs:enumeration>
+    	</xs:restriction>    </xs:simpleType>
+    
+	<xs:simpleType name="ExchangeRate">
+		<xs:annotation><xs:documentation>This data element will be used for DCC or multi-currency processing only and represents
+the factor used in the conversion from the transaction amount to cardholder billing
+amount. The transaction Amount is multiplied by the exchange rate to determine the
+cardholder billing amount.
+This data element is in the format ABBBBBBB where
+A = the decimal position offset from the right
+B = the actual conversion factor
+e.g. a conversion rate of 1.324567 will be represented as 61324567</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="99999999"/>
+    	</xs:restriction>
+    </xs:simpleType>
+        
+    <xs:simpleType name="SessionKey">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="32"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>        
+
+    <xs:simpleType name="PAN">
+    	<xs:annotation>
+    	<xs:documentation>
+    	The PrimaryAccount Number (PAN) contains the card account number.
+- Without encryption or tokenization, this is card number in plaintext, maximum 19
+digits.
+-With tokenization, this is the masked PAN
+- With encryption, this is the BCD values after 3DES encryption, maximum 64 bytes.
+This is optional. Refer to Section 3.3.20.
+Normally the PAN is returned in the response upon a successful capture of card data.
+However for those referenced transactions, including Top-up Authorization, Sales
+Completion and Sales Adjustment, the PAN may be present in the request. Refer to
+Section 3.3.19.</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="32"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>        
+
+    <xs:simpleType name="RRN">
+    	<xs:restriction base="xs:string">
+    	<xs:annotation><xs:documentation>This is a retrieval reference number unique assigned by the processor and used to retrieve
+original transaction data.
+For Swipe Card transaction, it is acceptable to return a value of all zeros as the RRN.</xs:documentation></xs:annotation>
+    	<xs:maxLength value="12"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="Track2">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="12"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="EntryMode">
+    	<xs:restriction base="xs:string">
+    	<xs:enumeration value="01"><xs:annotation><xs:documentation>EMV Fallback</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="02"><xs:annotation><xs:documentation>Swiping without PIN</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="03"><xs:annotation><xs:documentation>Manual Enter Card Number</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="04"><xs:annotation><xs:documentation>Swiping with PIN</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="05"><xs:annotation><xs:documentation>EMV without PIN</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="06"><xs:annotation><xs:documentation>EMV with offline PIN</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="07"><xs:annotation><xs:documentation>Proximity with Magnetic Stripe</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="08"><xs:annotation><xs:documentation>Proximity via ICC</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="09"><xs:annotation><xs:documentation>Others</xs:documentation></xs:annotation></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>      
+           
+    <xs:simpleType name="IssuerId">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="2"></xs:maxLength>
+    	<xs:enumeration value="00"><xs:annotation><xs:documentation>Local/Debit</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="01"><xs:annotation><xs:documentation>VISA</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="02"><xs:annotation><xs:documentation>MasterCard</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="03"><xs:annotation><xs:documentation>AMEX</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="04"><xs:annotation><xs:documentation>Diners Club</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="05"><xs:annotation><xs:documentation>JCB</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="06"><xs:annotation><xs:documentation>CUP (China Union Pay)</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="07"><xs:annotation><xs:documentation>SVC/Gift Card, or Private Label Card</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="08"><xs:annotation><xs:documentation>Others</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="09"><xs:annotation><xs:documentation>CUP Debit (With 09 added, 06 will be changed for CUP Credit)</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="10"><xs:annotation><xs:documentation>Debit SMS (10 doesn’t require batch while 00 does)</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="11"><xs:annotation><xs:documentation>Bank Card (local credit card)</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="12"><xs:annotation><xs:documentation>Discover</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="13"><xs:annotation><xs:documentation>PayPal</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="14"><xs:annotation><xs:documentation>Solo</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="15"><xs:annotation><xs:documentation>Laser</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="16"><xs:annotation><xs:documentation>UKDM/Switch</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="17"><xs:annotation><xs:documentation>VISAElectron</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="18"><xs:annotation><xs:documentation>VISADebit</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="19"><xs:annotation><xs:documentation>Maestro</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="20"><xs:annotation><xs:documentation>VPay</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="21"><xs:annotation><xs:documentation>Alliance</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="22"><xs:annotation><xs:documentation>EC Chip</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="23"><xs:annotation><xs:documentation>GiroCard</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="24"><xs:annotation><xs:documentation>MasterCard Debit</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="25"><xs:annotation><xs:documentation>Reserved For Future Used #1</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="26"><xs:annotation><xs:documentation>Reserved For Future Used #2</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="27"><xs:annotation><xs:documentation>Reserved For Future Used #3</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="28"><xs:annotation><xs:documentation>Reserved For Future Used #4</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="29"><xs:annotation><xs:documentation>Reserved For Future Used #5</xs:documentation></xs:annotation></xs:enumeration>
+		<xs:enumeration value="30"><xs:annotation><xs:documentation>Reserved For Future Used #6</xs:documentation></xs:annotation></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="RespCode">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="2"></xs:maxLength>
+			<xs:enumeration value="00"><xs:annotation><xs:documentation>Transaction Approved 00 Approve</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="01"><xs:annotation><xs:documentation>Refer to Issuer 01 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="02"><xs:annotation><xs:documentation>Refer to Issuer, special 02 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="03"><xs:annotation><xs:documentation>No Merchant 03 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="04"><xs:annotation><xs:documentation>Pick Up Card 04 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="05"><xs:annotation><xs:documentation>Do Not Honor 05 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="06"><xs:annotation><xs:documentation>Error 06 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="07"><xs:annotation><xs:documentation>Pick Up Card, Special 07 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="08"><xs:annotation><xs:documentation>Honor With Identification 08 Approve</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="09"><xs:annotation><xs:documentation>Request In Progress 09 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="10"><xs:annotation><xs:documentation>Approved For Partial Amount 10 Approve</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="11"><xs:annotation><xs:documentation>Approved, VIP 11 Approve</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="12"><xs:annotation><xs:documentation>Invalid Transaction 12 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="13"><xs:annotation><xs:documentation>Invalid Amount 13 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="14"><xs:annotation><xs:documentation>Invalid Card Number 14 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="15"><xs:annotation><xs:documentation>No Issuer 15 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="16"><xs:annotation><xs:documentation>Approved, Update Track 3 16 Approve</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="19"><xs:annotation><xs:documentation>Re-enter Last Transaction 19 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="21"><xs:annotation><xs:documentation>No Action Taken 21 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="22"><xs:annotation><xs:documentation>Suspected Malfunction 22 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="23"><xs:annotation><xs:documentation>Unacceptable Transaction Fee 23 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="25"><xs:annotation><xs:documentation>Unable to Locate Record On File 25 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="30"><xs:annotation><xs:documentation>Format Error 30 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="31"><xs:annotation><xs:documentation>Bank Not Supported By Switch 31 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="33"><xs:annotation><xs:documentation>Expired Card, Capture 33 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="34"><xs:annotation><xs:documentation>Suspected Fraud, Retain Card 34 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="35"><xs:annotation><xs:documentation>Card Acceptor, Contact Acquirer, Retain Card 35 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="36"><xs:annotation><xs:documentation>Restricted Card, Retain Card 36 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="37"><xs:annotation><xs:documentation>Contact Acquirer Security Department, Retain Card 37 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="38"><xs:annotation><xs:documentation>PIN Tries Exceeded, Capture 38 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="39"><xs:annotation><xs:documentation>No Credit Account 39 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="40"><xs:annotation><xs:documentation>Function Not Supported 40 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="41"><xs:annotation><xs:documentation>Lost Card 41 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="42"><xs:annotation><xs:documentation>No Universal Account 42 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="43"><xs:annotation><xs:documentation>Stolen Card 43 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="44"><xs:annotation><xs:documentation>No Investment Account 44 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="51"><xs:annotation><xs:documentation>Insufficient Funds 51 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="52"><xs:annotation><xs:documentation>No Cheque Account 52 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="53"><xs:annotation><xs:documentation>No Savings Account 53 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="54"><xs:annotation><xs:documentation>Expired Card 54 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="55"><xs:annotation><xs:documentation>Incorrect PIN 55 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="56"><xs:annotation><xs:documentation>No Card Record 56 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="57"><xs:annotation><xs:documentation>Function Not Permitted to Cardholder 57 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="58"><xs:annotation><xs:documentation>Function Not Permitted to Terminal 58 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="59"><xs:annotation><xs:documentation>Suspected Fraud 59 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="60"><xs:annotation><xs:documentation>Acceptor Contact Acquirer 60 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="61"><xs:annotation><xs:documentation>Exceeds Withdrawal Limit 61 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="62"><xs:annotation><xs:documentation>Restricted Card 62 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="63"><xs:annotation><xs:documentation>Security Violation 63 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="64"><xs:annotation><xs:documentation>Original Amount Incorrect 64 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="65"><xs:annotation><xs:documentation>Acceptor Contact Acquirer, Security 66 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="67"><xs:annotation><xs:documentation>Capture Card 67 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="75"><xs:annotation><xs:documentation>PIN Tries Exceeded 75 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="82"><xs:annotation><xs:documentation>CVV Validation Error 82 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="90"><xs:annotation><xs:documentation>Cutoff In Progress 90 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="91"><xs:annotation><xs:documentation>Host or Switch Unavailable 91 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="92"><xs:annotation><xs:documentation>Unable To Route Transaction 92 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="93"><xs:annotation><xs:documentation>Cannot Complete, Violation Of The Law 93 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="94"><xs:annotation><xs:documentation>Duplicate Transaction 94 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="96"><xs:annotation><xs:documentation>System Error 96 Decline</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="P2"><xs:annotation><xs:documentation>Read card Error</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="P3"><xs:annotation><xs:documentation>User Cancel</xs:documentation></xs:annotation></xs:enumeration>
+			<xs:enumeration value="PT"><xs:annotation><xs:documentation>Terminal Proprietary Response code</xs:documentation></xs:annotation></xs:enumeration>
+			
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="RespText">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="32"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="AuthCode">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="6"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="YYYYMMDDDate">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="8"></xs:maxLength>
+    	<xs:pattern value="(20\d{2})(\d{2})(\d{2})"></xs:pattern>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="PrintData">
+    	<xs:restriction base="xs:string">
+    	<xs:annotation><xs:documentation>This is the formatted response text which will be printed on receipt.
+- Lines are terminated with character “#”. MPG/MGDH or PMS/POS system shall
+then translate every “#” to a line feed during the printing.
+- There are merchant copy of receipt and customer copy of receipt. Receipts are
+terminated with “@”. MPG/MGDH or PMS/POS system shall then translate the
+“@” to a paper cut during the printing.</xs:documentation></xs:annotation>
+    	<xs:maxLength value="4096"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="CardHolderName">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="26"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="AID">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="32"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="Cryptogram">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="16"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="AppName">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="2"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+    <xs:simpleType name="AccountType">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="1"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="MerchantID">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="15"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="TerminalID">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="8"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>    
+    
+	<xs:simpleType name="CCV">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="4"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+      
+    <xs:simpleType name="ISR">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="128"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="LanguageID">
+    	<xs:restriction base="xs:string">
+    	<xs:enumeration value="0"><xs:annotation><xs:documentation>English</xs:documentation></xs:annotation></xs:enumeration>
+    	<xs:enumeration value="1"><xs:annotation><xs:documentation>French</xs:documentation></xs:annotation></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="BatchNo">
+    	<xs:annotation><xs:documentation>This is the batch number returned from the terminal. This field is optional.</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="1"/>
+         	<xs:maxInclusive value="999999"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+      
+    <xs:simpleType name="TransToken">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="32"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+    <xs:simpleType name="TraceNo">
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="1"/>
+         	<xs:maxInclusive value="999999"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+          
+    <xs:simpleType name="DCCIndicator">
+    	<xs:annotation><xs:documentation>This is to indicate the status of DCC. This field is optional. The list of value as below
+0 – DCC is not offered
+1 – DCC eligible and guest opt-in DCC
+2 – DCC eligible but guest opt-out DCC</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:int">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="2"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+	<xs:simpleType name="PrintFlag">
+    	<xs:annotation><xs:documentation>This is optional. It further explains the content of PrintData.
+l If PrintFlag = 0, then PrintData will have the full formatted receipt. This is
+the default value if PrintData is returned but PrintFlag isn’t present in
+response.
+l If PrintFlag = 1, then PrintData will have the additional receipt lines. In this
+case, there won’t be any page separator and only line separator will be
+present.</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:int">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="1"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+ <xs:simpleType name="DCCOfferOption">
+    	<xs:annotation><xs:documentation>0 – This is to instruct the device that it shall not check DCC nor present DCC offer
+for this transaction. This would be used in case MPG would know cardholder had
+opted-out. For example, when we don’t want to perform DCC upon guest check-in at
+hotel.
+1 – This is to instruct the device to perform DCC via normal way, i.e., the device will
+check DCC and present DCC offer to cardholder if DCC eligible
+2 – This is to instruct the device to directly process the transaction as DCC without
+asking cardholder. This would be used in case MPG would know cardholder had opted-in
+or cashier had already manually opted-in cardholder upon check-in.
+The default value is 1. If this field is not present in request message, the terminal shall see
+it as value 1, i.e., to process via normal way.
+</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:int">
+    	 	<xs:minInclusive value="0"/>
+         	<xs:maxInclusive value="2"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+
+	<xs:simpleType name="CardPresent">
+    	<xs:restriction base="xs:int">
+    		<xs:annotation><xs:documentation>1 – Card Present
+2 – MOTO
+3 – Recurring MOTO
+4 – Installment MOTO</xs:documentation></xs:annotation>
+    	 	<xs:minInclusive value="1"/>
+         	<xs:maxInclusive value="4"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+          
+    <xs:simpleType name="PromptMsg">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="200"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+          
+    <xs:simpleType name="Installment">
+    	<xs:restriction base="xs:integer">
+    	 	<xs:minInclusive value="1"/>
+         	<xs:maxInclusive value="99"/>
+    	</xs:restriction>
+    </xs:simpleType>      
+          
+    <xs:simpleType name="OtherData">
+    	<xs:restriction base="xs:string">
+    	<xs:maxLength value="20"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>      
+   
+    <xs:simpleType name="CardholderName">
+    	<xs:annotation><xs:documentation>This is the cardholder name from track1 or EMV tag.</xs:documentation></xs:annotation>
+    	<xs:restriction base="xs:string">
+    	</xs:restriction>
+    </xs:simpleType>      
+    
+   	<xs:element name="TransactionRequest">
+   	<xs:complexType>
+	<xs:annotation><xs:documentation>See section 3.2 page 19</xs:documentation></xs:annotation>
+    <xs:sequence>
+       	<xs:element name="SequenceNo" type="SequenceNo" minOccurs="1" maxOccurs="1"></xs:element>
+       	<xs:element name="TransType" type="TransType" minOccurs="1" maxOccurs="1"></xs:element>
+   		<xs:element name="SiteID" type="SiteID" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="WSNo" type="WSNo" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="TransAmount" type="Amount" minOccurs="1" maxOccurs="1"></xs:element>
+   		<xs:element name="OtherAmount" type="Amount" minOccurs="1" maxOccurs="1"></xs:element>
+  		<xs:element name="TransCurrency" type="Currency" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="CardPresent" type="CardPresent" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="CancelReason" type="CancelReason" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="BillingAmount" type="Amount" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="BillingCurrency" type="Currency" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="FXRate" type="ExchangeRate" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="SessionKey" type="SessionKey" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PAN" type="PAN" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="ExpiryDate" type="ExpiryDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="OriginalRRN" type="RRN" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="IssuerId" type="IssuerId" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AuthCode" type="AuthCode" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="SettleDate" type="YYYYMMDDDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PrintData" type="PrintData" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="DCCIndicator" type="DCCIndicator" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AID" type="AID" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="Cryptogram" type="Cryptogram" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AppName" type="AppName" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="DCCOfferOption" type="DCCOfferOption" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="CCV" type="CCV" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TransToken" type="TransToken" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TraceNo" type="TraceNo" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TransDate" type="YYYYMMDDDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PrintFlag" type="PrintFlag" minOccurs="0" maxOccurs="1"></xs:element>						
+		<xs:element name="Installment" type="Installment" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="OtherData" type="OtherData" minOccurs="0" maxOccurs="1"></xs:element>						
+    </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="TransactionResponse">
+   	<xs:complexType>
+	<xs:annotation><xs:documentation>See section 3.2 page 19</xs:documentation></xs:annotation>
+    <xs:sequence>
+       	<xs:element name="SequenceNo" type="SequenceNo" minOccurs="1" maxOccurs="1"></xs:element>
+       	<xs:element name="TransType" type="TransType" minOccurs="1" maxOccurs="1"></xs:element>
+   		<xs:element name="SiteID" type="SiteID" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="WSNo" type="WSNo" minOccurs="0" maxOccurs="1"></xs:element>
+   		<xs:element name="TransAmount" type="Amount" minOccurs="1" maxOccurs="1"></xs:element>
+   		<xs:element name="OtherAmount" type="Amount" minOccurs="1" maxOccurs="1"></xs:element>
+   		<xs:element name="BillingAmount" type="Amount" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="BillingCurrency" type="Currency" minOccurs="0" maxOccurs="1"></xs:element>
+  		<xs:element name="FXRate" type="ExchangeRate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PAN" type="PAN" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="ExpiryDate" type="ExpiryDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="Track2" type="Track2" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="EntryMode" type="EntryMode" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="IssuerId" type="IssuerId" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="RespCode" type="RespCode" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="RespText" type="RespText" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="RRN" type="RRN" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AuthCode" type="AuthCode" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="SettleDate" type="YYYYMMDDDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PrintData" type="PrintData" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="OfflineFlag" type="YNFlag" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="DCCIndicator" type="DCCIndicator" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="CardholderName" type="CardholderName" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AID" type="AID" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="Cryptogram" type="Cryptogram" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AppName" type="AppName" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="AccountType" type="AccountType" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="MerchantID" type="MerchantID" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TerminalID" type="TerminalID" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="ISR" type="ISR" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="EMVData" type="EMVData" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="LanguageID" type="LanguageID" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="BatchNo" type="BatchNo" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TransToken" type="TransToken" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TraceNo" type="TraceNo" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="TransDate" type="YYYYMMDDDate" minOccurs="0" maxOccurs="1"></xs:element>
+		<xs:element name="PrintFlag" type="PrintFlag" minOccurs="0" maxOccurs="1"></xs:element>						
+		<xs:element name="PromptMsg" type="PromptMsg" minOccurs="0" maxOccurs="1"></xs:element>						
+		 </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+          
+</xs:schema>

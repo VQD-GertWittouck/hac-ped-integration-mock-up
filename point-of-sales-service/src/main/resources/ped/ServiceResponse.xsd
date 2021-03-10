@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Paolo Magnoni -->
+<xs:schema targetNamespace="http://www.nrf-arts.org/IXRetail/namespace" xmlns="http://www.nrf-arts.org/IXRetail/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:IFSF="http://www.ifsf.org/" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:include schemaLocation="DR_BasicTypes.xsd"/>
+	<xs:include schemaLocation="DR_CountryCode_Full.xsd"/>
+	<xs:include schemaLocation="IFSF_DR_UnitOfMeasureCode.xsd"/>
+	<xs:include schemaLocation="DR_CurrencyCode_Full.xsd"/>
+	<xs:include schemaLocation="IFSF_BasicTypesCards.xsd"/>
+	<xs:include schemaLocation="IFSF_LanguageCode_Full.xsd"/>
+	
+	<xs:element name="ServiceResponse">
+		<xs:annotation>
+			<xs:documentation>IFSF POS Sell to EPS interface</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Terminal" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="TerminalID" type="TerminalIDType" use="required"/>
+						<xs:attribute name="TerminalBatch" type="BatchCodeType" use="optional"/>
+						<xs:attribute name="STAN" type="STANtype" use="optional"/>
+
+
+						<!-- FIS Extension dave.milne@fisglobal.com -->
+						<!--  Bug 4570 - RS18866 End of Day / Login Breakdown -->
+						<xs:attribute name="PhysicalTerminalID" type="PhysicalTerminalIDType" use="optional"/>
+						<!--  end bug 4570 -->
+						
+						<!-- Bug 4957 - EPS client should be capable of returning the serial number and physical terminal id -->
+						<xs:attribute name="SerialNumber" type="SerialNumberType" use="optional"/>
+						<!--  end bug 4957 -->						
+						
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Authorisation" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="AcquirerID" type="AcquirerType" use="required"/>
+						<xs:attribute name="TimeStamp" type="xs:dateTime" use="required"/>
+						<xs:attribute name="ApprovalCode" type="AuthorisationCodeType" use="optional"/>
+						<xs:attribute name="AcquirerBatch" type="BatchCodeType" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Reconciliation" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TotalAmount" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="MonetaryAmount">
+											<xs:attribute name="NumberPayments" type="xs:integer" use="required"/>
+											<xs:attribute name="PaymentType" type="TransactionType" use="required"/>
+											<xs:attribute name="Currency" type="CurrencyCode" use="optional"/>
+											<xs:attribute name="CardCircuit" type="CardCircuitType" use="optional"/>
+											<xs:attribute name="Acquirer" type="AcquirerType" use="optional"/>
+											
+											<!-- FIS Extension dave.milne@fisglobal.com -->
+											<!--  Bug 4570 - RS18866 End of Day / Login Breakdown -->
+											 <xs:attribute name="CardReportingName" type="CardReportingNameType" use="optional" />
+											<!--  end -->
+											
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="LanguageCode" type="LanguageCodeType" use="optional"/>
+						
+						<!-- FIS Extension dave.milne@fisglobal.com -->
+						<!--  Bug 4570 - RS18866 End of Day / Login Breakdown -->
+						
+						<xs:attribute name="StartSTAN" type="STANtype" use="optional" />
+						<xs:attribute name="StartTimeStamp" type="xs:dateTime" use="optional" />
+						<xs:attribute name="EndSTAN" type="STANtype" use="optional" />
+						<xs:attribute name="EndTimeStamp" type="xs:dateTime" use="optional" />
+						<xs:attribute name="Status" type="ReconciliationStatusType" use="optional" />
+						<!--  end Bug 4570 -->
+						
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DiagnosisResult" type="xs:string" minOccurs="0"/>
+				<xs:element name="OriginalHeader" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="RequestType" type="ServiceRequestType" use="required"/>
+						<xs:attribute name="ApplicationSender" type="ApplicationType" use="optional"/>
+						<xs:attribute name="WorkstationID" type="WorkstationIDType" use="required"/>
+						<xs:attribute name="POPID" type="POPIDType" use="optional"/>
+						<xs:attribute name="RequestID" type="RequestIDType" use="required"/>
+						<xs:attribute name="OverallResult" type="RequestResultType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PrivateData" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				
+				
+				<!--  FIS Extension in EPS 2.5  Bug 4567 - RS18866 New Security Swipe message dave.milne@fisglobal.com -->
+		        <xs:element name="POSdata" minOccurs="0">
+		          <xs:complexType>
+		            <xs:sequence>
+		              <xs:element name="POSTimeStamp" type="xs:dateTime" />
+		              <xs:element minOccurs="0" name="ShiftNumber">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:integer">
+		                    <xs:totalDigits value="3" />
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		              <xs:element minOccurs="0" name="ClerkID">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:integer">
+		                    <xs:totalDigits value="9" />
+		                    <xs:minInclusive value="0" />
+		                    <xs:maxInclusive value="999999999" />
+		                    <xs:fractionDigits value="0" />
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		              <xs:element minOccurs="0" name="SecurityID">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:string">
+		                    <xs:maxLength value="19" />
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		            </xs:sequence>
+		          </xs:complexType>
+		        </xs:element>
+			</xs:sequence>
+			<!--  end FIS extension -->
+			
+			<xs:attribute name="RequestType" type="ServiceRequestType" use="required"/>
+			<xs:attribute name="ApplicationSender" type="ApplicationType" use="optional"/>
+			<xs:attribute name="WorkstationID" type="WorkstationIDType" use="required"/>
+			<xs:attribute name="POPID" type="POPIDType" use="optional"/>
+			<xs:attribute name="RequestID" type="RequestIDType" use="required"/>
+			<xs:attribute name="OverallResult" type="RequestResultType" use="required"/>
+			<xs:attribute name="Status" type="ReconciliationStatusType" use="optional"/>
+
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
